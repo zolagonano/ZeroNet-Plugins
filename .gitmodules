@@ -1,0 +1,9 @@
+[submodule "NameYo"]
+	path = NameYo
+	url = https://github.com/ZeroNetX/Plugin-NameYo.git
+[submodule "disabled-BackgroundProcessing"]
+	path = disabled-BackgroundProcessing
+	url = https://github.com/ZeroNetX/Plugin-BackgroundProcessing.git
+[submodule "PeerMessage"]
+	path = PeerMessage
+	url = https://github.com/ZeroNetX/Plugin-PeerMessage.git
