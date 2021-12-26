@@ -3,8 +3,8 @@ import itertools
 
 from Plugin import PluginManager
 from util import helper
-from Crypt import CryptEd25519
-from Crypt import CryptRsa
+from lib import Ed25519
+from Crypt import CryptTor
 
 allow_reload = False  # No source reload supported in this plugin
 time_full_announced = {}  # Tracker address: Last announced all site to tracker
@@ -122,7 +122,7 @@ class SiteAnnouncerPlugin(object):
                 onion = self.site.connection_server.tor_manager.getOnion(site.address)
                 publickey = self.site.connection_server.tor_manager.getPublickey(onion)
                 if publickey not in request["onion_signs"]:
-                    sign = CryptRsa.sign(res["onion_sign_this"].encode("utf8"), self.site.connection_server.tor_manager.getPrivatekey(onion))
+                    sign = CryptTor.sign(res["onion_sign_this"].encode("utf8"), self.site.connection_server.tor_manager.getPrivatekey(onion))
                     request["onion_signs"][publickey] = sign
             res = tracker_peer.request("announce", request)
             if not res or "onion_sign_this" in res:

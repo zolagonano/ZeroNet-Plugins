@@ -4,7 +4,7 @@ from util import helper
 
 from Plugin import PluginManager
 from .BootstrapperDb import BootstrapperDb
-from Crypt import CryptRsa
+from Crypt import CryptTor
 from Config import config
 
 if "db" not in locals().keys():  # Share during reloads
@@ -23,8 +23,8 @@ class FileRequestPlugin(object):
         onions_signed = []
         # Check onion signs
         for onion_publickey, onion_sign in onion_signs.items():
-            if CryptRsa.verify(onion_sign_this.encode(), onion_publickey, onion_sign):
-                onions_signed.append(CryptRsa.publickeyToOnion(onion_publickey))
+            if CryptTor.verify(onion_sign_this.encode(), onion_publickey, onion_sign):
+                onions_signed.append(CryptTor.publickeyToOnion(onion_publickey))
             else:
                 break
 

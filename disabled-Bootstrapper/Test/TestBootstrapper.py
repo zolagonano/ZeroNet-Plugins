@@ -6,7 +6,7 @@ import pytest
 from Bootstrapper import BootstrapperPlugin
 from Bootstrapper.BootstrapperDb import BootstrapperDb
 from Peer import Peer
-from Crypt import CryptRsa
+from Crypt import CryptTor
 from util import helper
 
 
@@ -142,8 +142,8 @@ class TestBootstrapper:
         assert "onion_sign_this" in res
 
         # Sign the nonces
-        sign1 = CryptRsa.sign(res["onion_sign_this"].encode(), tor_manager.getPrivatekey(onion1))
-        sign2 = CryptRsa.sign(res["onion_sign_this"].encode(), tor_manager.getPrivatekey(onion2))
+        sign1 = CryptTor.sign(res["onion_sign_this"].encode(), tor_manager.getPrivatekey(onion1))
+        sign2 = CryptTor.sign(res["onion_sign_this"].encode(), tor_manager.getPrivatekey(onion2))
 
         # Bad sign (different address)
         res = peer.request("announce", {
