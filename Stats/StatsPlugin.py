@@ -5,6 +5,7 @@ import json
 import sys
 import itertools
 
+from User import UserManager
 from Plugin import PluginManager
 from Config import config
 from util import helper
@@ -377,8 +378,21 @@ class UiRequestPlugin(object):
         s = time.time()
 
         # Style
+        user = UserManager.user_manager.get()
+
+        ## Dark theme
+        if user.settings.get("theme", "light") == "dark":
+            yield """
+            <style>
+             body { color: whitesmoke; background-color: #252b33 }
+             a { color: #77b2eb }
+            """
+
+        ## Light theme
+        else:
+            yield "<style>\n"
+
         yield """
-        <style>
          * { font-family: monospace }
          table td, table th { text-align: right; padding: 0px 10px }
          .connections td { white-space: nowrap }
