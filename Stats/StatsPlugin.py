@@ -385,7 +385,7 @@ class UiRequestPlugin(object):
             yield """
             <style>
              body { color: whitesmoke; background-color: #252b33 }
-             a { color: #77b2eb }
+             a { color: #dfa0ff }
             """
 
         ## Light theme
