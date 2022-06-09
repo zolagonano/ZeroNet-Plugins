@@ -98,6 +98,9 @@
         }, {
           title: "Error",
           filter: "ERROR"
+        }, {
+          title: "Site",
+          filter: ""
         }
       ];
       this.read_size = 32 * 1024;
@@ -238,6 +241,10 @@
     };
 
     Console.prototype.loadConsoleText = function() {
+      var filter = this.filter;
+      if (filter == 'Site') {
+        this.filter = 'Site:' + this.sidebar.wrapper.site_info.address_short;
+      }
       this.sidebar.wrapper.ws.cmd("consoleLogRead", {
         filter: this.filter,
         read_size: this.read_size

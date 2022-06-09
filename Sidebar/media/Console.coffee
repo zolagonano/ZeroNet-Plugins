@@ -8,6 +8,7 @@ class Console extends Class
 			{title: "Info", filter: "INFO"},
 			{title: "Warning", filter: "WARNING"},
 			{title: "Error", filter: "ERROR"}
+			{title: "Site", filter: ""}
 		]
 		@read_size = 32 * 1024
 		@tab_active = ""
@@ -117,6 +118,8 @@ class Console extends Class
 
 
 	loadConsoleText: =>
+		if @filter == "Site"
+			@filter = "Site:" + @sidebar.wrapper.site_info.address_short
 		@sidebar.wrapper.ws.cmd "consoleLogRead", {filter: @filter, read_size: @read_size}, (res) =>
 			@text.html("")
 			pos_diff = res["pos_end"] - res["pos_start"]
