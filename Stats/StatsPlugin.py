@@ -379,10 +379,10 @@ class UiRequestPlugin(object):
         s = time.time()
 
         # Style
-        user = UserManager.user_manager.get()
+        user = self.getCurrentUser()
 
         ## Dark theme
-        if user.settings.get("theme", "light") == "dark":
+        if user and user.settings and user.settings.get("theme", "light") == "dark":
             yield """
             <style>
              body { color: whitesmoke; background-color: #252b33 }
