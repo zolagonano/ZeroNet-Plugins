@@ -17366,7 +17366,12 @@ CodeMirror.defineMode("javascript", function(config, parserConfig) {
           var kw = keywords[word]
           return ret(kw.type, kw.style, word)
         }
-        if (word == "async" && stream.match(/^(\s|\/\*.*?\*\/)*[\[\(\w]/, false))
+        
+        // vulnerable code: https://security.snyk.io/vuln/SNYK-JS-CODEMIRROR-1016937
+        // if (word == "async" && stream.match(/^(\s|\/\*.*?\*\/)*[\[\(\w]/, false))
+
+        // Fix: https://github.com/codemirror/codemirror5/blob/a0854c752a76e4ba9512a9beedb9076f36e4f8f9/mode/javascript/javascript.js#L130C36-L130C36
+        if (word == "async" && stream.match(/^(\s|\/\*([^*]|\*(?!\/))*?\*\/)*[\[\(\w]/, false))
           return ret("async", "keyword", word)
       }
       return ret("variable", "variable", word)
