@@ -5,6 +5,7 @@ import json
 import sys
 import itertools
 
+from User import UserManager
 from Plugin import PluginManager
 from Config import config
 from util import helper
@@ -73,8 +74,9 @@ class UiRequestPlugin(object):
         import main
 
         # Connections
-        yield "<b>Connections</b> (%s, current version: %s, total made: %s, in: %s, out: %s):<br>" % (
-            len(main.file_server.connections), main.file_server.last_connection_id_current_version, main.file_server.last_connection_id,
+        yield "<b>Connections</b> (%s, current version: %s, supported version: %s, total made: %s, in: %s, out: %s):<br>" % (
+            len(main.file_server.connections), main.file_server.last_connection_id_current_version, 
+            main.file_server.last_connection_id_supported_version, main.file_server.last_connection_id,
             main.file_server.num_incoming, main.file_server.num_outgoing
         )
         yield "<table class='connections'><tr> <th>id</th> <th>type</th> <th>ip</th> <th>open</th> <th>crypt</th> <th>ping</th>"
@@ -377,8 +379,21 @@ class UiRequestPlugin(object):
         s = time.time()
 
         # Style
+        user = self.getCurrentUser()
+
+        ## Dark theme
+        if user and user.settings and user.settings.get("theme", "light") == "dark":
+            yield """
+            <style>
+             body { color: whitesmoke; background-color: #252b33 }
+             a { color: #dfa0ff }
+            """
+
+        ## Light theme
+        else:
+            yield "<style>\n"
+
         yield """
-        <style>
          * { font-family: monospace }
          table td, table th { text-align: right; padding: 0px 10px }
          .connections td { white-space: nowrap }
